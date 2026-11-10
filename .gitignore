@@ -1,0 +1,15 @@
+# Arquivos locais e dados privados
+*.exe
+*.zip
+*.7z
+*.rar
+*.pdf
+*.json
+*.env
+.env*
+!.env.example
+node_modules/
+__pycache__/
+outputs/
+backups/
+BKP*/
