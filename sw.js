@@ -1,4 +1,4 @@
-const CACHE_NAME = 'kr2melo-v5.3.46-offline-20261109';
+const CACHE_NAME = 'kr2melo-v5.3.47-offline-20261110';
 const CORE = ['./', 'index.html', 'mobile.html', 'consulta.html', 'styles.css', 'mobile.css', 'consulta.css', 'sync.js', 'financial.js', 'auditor.js', 'app.js', 'backup-validator.js', 'history-bills.js', 'dashboard.js', 'offline-start.js', 'reading-average.js', 'mobile.js', 'consulta.js', 'manifest.webmanifest', 'assets/logo.png', 'assets/icon-192.png', 'assets/icon-512.png', 'assets/assinatura.png'];
 const FRESH_FILES = /(?:\.html$|\.js$|\.css$|manifest\.webmanifest$)/i;
 

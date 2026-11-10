@@ -2,7 +2,7 @@
   'use strict';
 
   const KEY = 'kr2melo.hidrometro.v1';
-  const APP_VERSION = '5.3.46';
+  const APP_VERSION = '5.3.47';
   const DEFAULT_TARIFF = { minimum: 80.84, minimumM3: 10, tier1: 8.37, tier1Limit: 20, tier2: 10.87, tier2Limit: 30 };
   const money = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
   const monthFmt = new Intl.DateTimeFormat('pt-BR', { month: 'long', year: 'numeric' });
@@ -1887,7 +1887,7 @@ Esta ação remove os apartamentos da competência atual. O histórico já fecha
 
   // ===================== Impressão, recibos, observações e conflitos =====================
   const VERSION_LABEL = `v${APP_VERSION}`;
-  const APP_UPDATED_AT = '09/11/2026';
+  const APP_UPDATED_AT = '10/11/2026';
 
   function versionText(text = '') {
     return String(text).replace(/v5\.\d+(?:\.\d+)?/g, VERSION_LABEL);
@@ -4307,18 +4307,20 @@ Esta ação remove os apartamentos da competência atual. O histórico já fecha
   renderReadings = function(block) { return `${readingBridgeCardV5331(block)}${renderReadingsV5331Base(block)}`; };
 
   function generateSindicoToken() {
-    return 'sin-' + Math.random().toString(36).slice(2, 10) + Math.random().toString(36).slice(2, 6);
+    const bytes = crypto.getRandomValues(new Uint8Array(32));
+    return 'sin-' + Array.from(bytes, b => b.toString(16).padStart(2, '0')).join('');
   }
 
   async function showSindicoShareModal(block = selected()) {
     if (!block) return toast('Selecione um condomínio primeiro.', true);
-    if (!block.sindicoToken) {
+    if (!/^sin-[a-f0-9]{64}$/.test(String(block.sindicoToken || ''))) {
       block.sindicoToken = generateSindicoToken();
       save('Link do síndico gerado');
     }
 
     const hasCloud = Boolean(window.KR2Sync?.configured?.());
     let cloudSynced = false;
+    let publicationError = '';
 
     // Prepara dados de conferência somente leitura
     const totals = chargeTotals(block);
@@ -4397,8 +4399,14 @@ Esta ação remove os apartamentos da competência atual. O histórico já fecha
         await window.KR2Sync.publishSindicoView(viewData);
         cloudSynced = true;
       } catch (e) {
+        publicationError = e.message || 'Falha na publicação';
         console.warn('Falha ao publicar no Supabase:', e);
       }
+    }
+
+    if (hasCloud && !cloudSynced) {
+      toast(publicationError || 'Entre na sincronização para publicar o portal antes de gerar o link.', true);
+      return;
     }
 
     const SINDICO_PORTAL_KEY = 'kr2melo.sindico.publicUrl.v1';

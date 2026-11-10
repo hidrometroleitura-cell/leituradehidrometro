@@ -1,8 +1,8 @@
 (() => {
   'use strict';
   const KEY = 'kr2melo.hidrometro.v1';
-  const APP_VERSION = '5.3.46';
-  const APP_UPDATED_AT = '09/11/2026';
+  const APP_VERSION = '5.3.47';
+  const APP_UPDATED_AT = '10/11/2026';
   const $ = (selector, parent = document) => parent.querySelector(selector);
   const monthFmt = new Intl.DateTimeFormat('pt-BR', { month: 'long', year: 'numeric' });
   const n = value => Number(value) || 0;

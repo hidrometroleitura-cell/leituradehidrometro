@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+  <meta name="theme-color" content="#111111">
+  <meta name="description" content="KR²MELO · Portal de Consulta e Conferência do Síndico.">
+  <title>Portal do Síndico · KR²MELO</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/logo.png">
+  <link rel="stylesheet" href="consulta.css">
+</head>
+<body>
+  <header class="c-top">
+    <div class="c-brand">
+      <img src="assets/logo.png" alt="KR²MELO">
+      <div class="c-title">
+        <strong>KR²MELO · Portal do Síndico</strong>
+        <small id="cSubtitle">Conferência e Transparência de Consumo</small>
+      </div>
+    </div>
+    <div class="c-actions">
+      <button type="button" class="btn-print" id="printReportBtn">🖨️ <span>Imprimir Relatório</span></button>
+    </div>
+  </header>
+
+  <main id="consultaApp">
+    <div class="loading-state" id="loadingState">
+      <div class="spinner"></div>
+      <p>Carregando dados do condomínio...</p>
+    </div>
+  </main>
+
+  <!-- Modal para visualização da foto do hidrômetro -->
+  <div id="photoModal" class="photo-modal" hidden>
+    <div class="photo-modal-card">
+      <div class="photo-modal-head">
+        <h3 id="photoModalTitle">Foto do Hidrômetro</h3>
+        <button type="button" id="closePhotoModal" class="btn-close" aria-label="Fechar">✕</button>
+      </div>
+      <p id="photoModalCaption" class="photo-modal-caption"></p>
+      <div class="photo-modal-body">
+        <img id="photoModalImg" src="" alt="Comprovante de Leitura">
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="sync.js"></script>
+  <script src="financial.js"></script>
+  <script src="consulta.js"></script>
+</body>
+</html>

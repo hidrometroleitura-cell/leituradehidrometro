@@ -1,6 +1,6 @@
-# KR2MELO 5.3.46
+# KR2MELO 5.3.47
 
-Código-fonte do painel, Leitura in loco, consulta e portal do síndico. A atualização está descrita em ATUALIZACAO-5.3.46.md. O padrão permanente de entrega está em AGENTS.md.
+Código-fonte do painel, Leitura in loco, consulta e portal do síndico. A atualização está descrita em ATUALIZAR-ESTA-VERSAO.md. O padrão permanente de entrega está em AGENTS.md.
 
 ## Estrutura
 
@@ -19,13 +19,13 @@ Com Node.js instalado, execute `node tests/test-reading-average.cjs`.
 
 ## Executável
 
-Compile ServidorIniciador.cs com o compilador C# do .NET Framework, referenciando System.Windows.Forms.dll e usando target:winexe. O nome de saída deve ser KR2MELO-v5.3.46-Offline.exe, na raiz do projeto. A versão compilada já está disponível no ZIP completo.
+Compile ServidorIniciador.cs com o compilador C# do .NET Framework, referenciando System.Windows.Forms.dll e usando target:winexe. O nome de saída deve ser KR2MELO-v5.3.47-Offline.exe, na raiz do projeto. A versão compilada já está disponível no ZIP completo.
 
 ## Gerar entregas
 
 Com Python instalado e o executável compilado na raiz, execute:
 
-`python tools/package-release.py --source . --version 5.3.46 --destination ../KR2MELO-v5.3.46-Entregas`
+`python tools/package-release.py --source . --version 5.3.47 --destination ../KR2MELO-v5.3.47-Entregas`
 
 O destino deve ser novo e ficar fora da pasta do código. A ferramenta também cria um ZIP para transportar as entregas preservando as pastas separadas.
 

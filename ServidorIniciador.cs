@@ -9,14 +9,14 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Reflection;
 [assembly: AssemblyTitle("KR2MELO Offline — Boletos do histórico")]
-[assembly: AssemblyVersion("5.3.46.0")]
-[assembly: AssemblyFileVersion("5.3.46.0")]
+[assembly: AssemblyVersion("5.3.47.0")]
+[assembly: AssemblyFileVersion("5.3.47.0")]
 class Iniciador {
  static readonly string Folder=AppDomain.CurrentDomain.BaseDirectory;
  static string Identity(){using(var hash=SHA256.Create()){
-  string text=Folder+"KR2MELO-launcher-5.3.46";
+  string text=Folder+"KR2MELO-launcher-5.3.47";
   foreach(var name in new[]{"index.html","offline-start.js","backup-validator.js","history-bills.js","dashboard.js","reading-average.js","mobile.js","app.js","sync.js","financial.js","auditor.js"})text+=File.ReadAllText(Path.Combine(Folder,name));
-  return "KR2MELO-5.3.46:"+Convert.ToBase64String(hash.ComputeHash(Encoding.UTF8.GetBytes(text)));
+  return "KR2MELO-5.3.47:"+Convert.ToBase64String(hash.ComputeHash(Encoding.UTF8.GetBytes(text)));
  }}
  static string Read(int port){var req=(HttpWebRequest)WebRequest.Create("http://127.0.0.1:"+port+"/__kr2health");req.Proxy=null;req.Timeout=500;req.ReadWriteTimeout=500;
   using(var response=req.GetResponse())using(var reader=new StreamReader(response.GetResponseStream()))return reader.ReadToEnd();}

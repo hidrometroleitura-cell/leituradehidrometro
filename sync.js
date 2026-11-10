@@ -47,8 +47,9 @@
   async function request(path, options = {}, token = '') {
     const config = read();
     if (!configured()) throw new Error('Informe a URL do projeto Supabase e a chave pública (anon/publishable).');
-    const authHeader = token ? `Bearer ${token}` : `Bearer ${config.anonKey}`;
-    const headers = { apikey: config.anonKey, Authorization: authHeader, ...(options.headers || {}) };
+    const authHeader = token ? `Bearer ${token}` : null;
+    const headers = { apikey: config.anonKey, ...(options.headers || {}) };
+    if (authHeader) headers.Authorization = authHeader;
     if (options.body && !headers['Content-Type']) headers['Content-Type'] = 'application/json';
     const response = await fetch(`${cleanUrl(config.url)}${path}`, { ...options, headers });
     if (!response.ok) throw new Error(await errMessage(response));
@@ -179,7 +180,11 @@
   }
   async function publishSindicoView(viewData) {
     const config = await refreshSessionIfNeeded();
-    const body = [viewData];
+    const body = [{
+      block_id: String(viewData.block_id), owner_id: config.user.id,
+      token: String(viewData.token), payload: viewData,
+      updated_at: new Date().toISOString()
+    }];
     const data = await request('/rest/v1/kr2melo_sindico_views', {
       method: 'POST',
       headers: { Prefer: 'resolution=merge-duplicates,return=representation' },
@@ -190,12 +195,13 @@
   async function fetchSindicoView(blockId, token) {
     const config = read();
     if (!configured()) throw new Error('Serviço de nuvem não configurado.');
-    const bId = encodeURIComponent(blockId);
-    const tok = encodeURIComponent(token);
-    const data = await request(`/rest/v1/kr2melo_sindico_views?block_id=eq.${bId}&token=eq.${tok}&limit=1`, { method: 'GET' });
-    const row = Array.isArray(data) ? data[0] : null;
+    const row = await request('/rest/v1/rpc/kr2melo_get_sindico_view', {
+      method: 'POST',
+      body: JSON.stringify({ p_block_id: String(blockId), p_token: String(token) })
+    });
     if (!row) throw new Error('Condomínio não encontrado ou link de acesso inválido.');
     return row;
   }
   window.KR2Sync = { getConfig, setConfig, clearConfig, configured, connected, autoEnabled, signIn, signUp, signOut, pullState, pushState, queuePush, deleteRemote, remoteInfo, publishSindicoView, fetchSindicoView };
 })();
+

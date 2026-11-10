@@ -2,7 +2,7 @@
   'use strict';
   const key = 'kr2melo.hidrometro.v1', activeKey = 'kr2melo.desktop.activeSession';
   const param = new URL(location.href).searchParams.get('session');
-  const APP_VERSION = '5.3.46', APP_UPDATED_AT = '09/11/2026';
+  const APP_VERSION = '5.3.47', APP_UPDATED_AT = '10/11/2026';
   let token = param || crypto.randomUUID();
   const shell = document.querySelector('.app-shell');
   shell.hidden = true;
